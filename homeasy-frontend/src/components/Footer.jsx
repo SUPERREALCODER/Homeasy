@@ -1,17 +1,8 @@
-import React from "react";
-import { Footer } from "flowbite-react";
 // import logo from "../assets/images/logo.svg"
-import {
-  BsDribbble,
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsTwitter,
-} from "react-icons/bs";
+import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
 const FooterSection = () => {
   return (
-    
     <footer className=" z-10 bg-[#FAFAFA] dark:bg-[#0D121C] text-gray-800 dark:text-white border-t dark:border-none border-gray-200 dark:border-gray-800">
       <div className="max-w-[1280px] mx-auto py-8 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -26,7 +17,7 @@ const FooterSection = () => {
               /> */}
               <div className="w-[100px] text-2xl md:text-4xl">
                 <span className="dark:text-white">Hom</span>
-                <span className="text-sky-400">easy</span>
+                <span className="text-blue-500">easy</span>
               </div>
             </a>
           </div>
@@ -58,9 +49,9 @@ const FooterSection = () => {
 
           {/* Follow Us */}
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold uppercase mb-2 dark:text-gray-300">
+            <h1 className="text-sm font-semibold uppercase mb-2 dark:text-gray-300">
               Follow us
-            </h3>
+            </h1>
             <ul className="space-y-1">
               <li>
                 <a
@@ -68,6 +59,7 @@ const FooterSection = () => {
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="Twitter"
                 >
                   Twitter
                 </a>
@@ -76,6 +68,9 @@ const FooterSection = () => {
                 <Link
                   href="/"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
                 >
                   Instagram
                 </Link>
@@ -85,14 +80,17 @@ const FooterSection = () => {
 
           {/* Legal */}
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold uppercase mb-2 dark:text-gray-300">
+            <h1 className="text-sm font-semibold uppercase mb-2 dark:text-gray-300">
               Legal
-            </h3>
+            </h1>
             <ul className="space-y-1">
               <li>
                 <a
                   href="#"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Privacy Policy"
                 >
                   Privacy Policy
                 </a>
@@ -101,6 +99,9 @@ const FooterSection = () => {
                 <a
                   href="#"
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Terms & Conditions"
                 >
                   Terms &amp; Conditions
                 </a>
@@ -122,24 +123,36 @@ const FooterSection = () => {
             <a
               href="#"
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
             >
               <BsFacebook />
             </a>
             <a
               href="#"
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
             >
               <BsInstagram />
             </a>
             <a
               href="#"
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Twitter"
             >
               <BsTwitter />
             </a>
             <a
               href="#"
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
             >
               <BsGithub />
             </a>
