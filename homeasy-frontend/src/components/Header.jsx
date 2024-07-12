@@ -1,15 +1,10 @@
 import { Button } from "flowbite-react";
-import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
 const navList = [
   {
     name: "Home",
     link: "/",
-  },
-  {
-    name: "Services",
-    link: "/services",
   },
   {
     name: "Contact",
@@ -25,7 +20,7 @@ const Header = () => {
           <div className="logo text-xl sm:text-3xl">
             <Link to="/">
               <span>Hom</span>
-              <span className="text-sky-400 font-poppins">easy</span>
+              <span className="text-blue-500 font-poppins">easy</span>
             </Link>
           </div>
           {/* searchBar */}
@@ -33,7 +28,7 @@ const Header = () => {
           <div className="hidden md:flex items-center">
             <form className="max-w-md w-[380px]  mx-auto">
               <label
-                for="default-search"
+                htmlFor="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
               >
                 Search
@@ -49,6 +44,7 @@ const Header = () => {
                 <div className="absolute inset-y-0 end-0 flex items-center pe-3">
                   <button
                     type="submit"
+                    aria-label="Search"
                     className=" cursor-pointer hover:bg-gray-100 focus:bg-gray-200 dark:hover:bg-gray-800 dark:focus:bg-gray-700 w-10 h-10 flex justify-center items-center rounded-full"
                   >
                     <svg
@@ -60,9 +56,9 @@ const Header = () => {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                       />
                     </svg>
@@ -82,17 +78,19 @@ const Header = () => {
           <div className="flex items-center gap-6">
             <ul className="hidden lg:flex items-center gap-x-4">
               {navList.map((item, index) => (
-                <NavLink
-                  to={item.link}
-                  key={index}
-                  className={({ isActive }) =>
-                    `flex items-center duration-150 hover:text-blue-400 list-none cursor-pointer text-base font-medium ${
-                      isActive ? "text-blue-500" : ""
-                    }`
-                  }
-                >
-                  {item.name}
-                </NavLink>
+                <li key={index}>
+                  <NavLink
+                    to={item.link}
+                    key={index}
+                    className={({ isActive }) =>
+                      `flex items-center duration-150 hover:text-blue-400 list-none cursor-pointer text-base font-medium ${
+                        isActive ? "text-blue-600" : ""
+                      }`
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                </li>
               ))}
             </ul>
             <div className="flex items-center cursor-pointer md:hidden">

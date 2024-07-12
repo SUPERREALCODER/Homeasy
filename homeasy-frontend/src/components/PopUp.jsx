@@ -1,25 +1,9 @@
 import { Button } from "flowbite-react";
-import React from "react";
+import PropTypes from "prop-types";
 import OptionCard from "./OptionCard";
 import { IoClose } from "react-icons/io5";
-// const serviceList = [
-//   {
-//     name: "Fan",
-//     image: "https://cdn-icons-png.flaticon.com/512/4202/4202905.png",
-//   },
-//   {
-//     name: "Light",
-//     image: "https://cdn-icons-png.flaticon.com/128/5188/5188554.png",
-//   },
-//   {
-//     name: "Air Conditioner",
-//     image: "https://cdn-icons-png.flaticon.com/128/1995/1995491.png",
-//   },
-//   {
-//     name: "wiring",
-//     image: "https://cdn-icons-png.flaticon.com/128/1995/1995491.png",
-//   },
-// ];
+import { Link } from "react-router-dom";
+
 const PopUp = ({ selectedService, onClose }) => {
   if (!selectedService) return null;
   console.log("PopUp received selectedService:", selectedService);
@@ -43,12 +27,20 @@ const PopUp = ({ selectedService, onClose }) => {
         <div className=" grid grid-cols-2 gap-4">
           {selectedService ? (
             selectedService.services.map((item, index) => (
-              <OptionCard
+              <Link
+                to={`/services/${encodeURIComponent(
+                  selectedService.name
+                )}/${encodeURIComponent(item.name)}`}
                 key={index}
-                title={item.name}
-                image={item.image}
-                customClass="flex flex-col items-center justify-center gap-2 p-2 md:p-4 border cursor-pointer w-40 rounded-md shadow-sm duration-200 hover:shadow-md hover:bg-blue-100 active:shadow-lg bg-gray-50 text-sm"
-              />
+              >
+                <OptionCard
+                  title={item.name}
+                  image={item.image}
+                  customClass="flex flex-col items-center justify-center gap-2 p-2 md:p-4 border cursor-pointer w-40 rounded-md shadow-sm duration-200 hover:shadow-md hover:bg-blue-100 active:shadow-lg bg-gray-50 text-sm"
+                  customClassImg={"w-20"}
+                  customClassTitle={"font-normal sm:font-medium"}
+                />
+              </Link>
             ))
           ) : (
             <div>
@@ -59,6 +51,19 @@ const PopUp = ({ selectedService, onClose }) => {
       </div>
     </>
   );
+};
+
+PopUp.propTypes = {
+  selectedService: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    services: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }),
+  onClose: PropTypes.func.isRequired,
 };
 
 export default PopUp;

@@ -1,6 +1,13 @@
-import React from "react";
 //  const customClass = "bg-blue-100";
-const OptionCard = ({ title, image, onClick, customClass }) => {
+import PropTypes from "prop-types";
+const OptionCard = ({
+  title,
+  image,
+  onClick,
+  customClass,
+  customClassImg,
+  customClassTitle,
+}) => {
   return (
     <>
       <div
@@ -8,11 +15,20 @@ const OptionCard = ({ title, image, onClick, customClass }) => {
         className={customClass}
         onClick={onClick}
       >
-        <img src={image} alt={`${title} image`} className="w-20" />
-        <h1 className="font-normal sm:font-medium ">{title}</h1>
+        <img src={image} alt={`${title} image`} className={customClassImg} />
+        <h1 className={customClassTitle}>{title}</h1>
       </div>
     </>
   );
+};
+
+OptionCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  customClass: PropTypes.string,
+  customClassImg: PropTypes.string,
+  customClassTitle: PropTypes.string,
 };
 
 export default OptionCard;

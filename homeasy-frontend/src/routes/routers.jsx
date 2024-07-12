@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Layout from "../Layout";
-import Contact from "../pages/Contact";
+// import Contact from "../pages/Contact";
 import Service from "../pages/Service";
+const Contact = React.lazy(() => import("../pages/Contact"));
 const routers = createBrowserRouter([
   {
     path: "/",
@@ -14,7 +15,7 @@ const routers = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/services/:category",
+        path: "/services/:category/:subcategory",
         element: <Service />,
       },
       // {
@@ -23,7 +24,11 @@ const routers = createBrowserRouter([
       // },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Contact />
+          </Suspense>
+        ),
       },
     ],
   },
