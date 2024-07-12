@@ -9,7 +9,7 @@ const PopUp = ({ selectedService, onClose }) => {
   console.log("PopUp received selectedService:", selectedService);
   return (
     <>
-      <div className="absolute flex flex-col gap-4 items-center w-fit md:w-[484px] h-fit md:h-2/4 justify-evenly bg-white rounded-md shadow-lg p-4 md:p-6">
+      <div className="absolute flex flex-col gap-4 items-center w-fit md:w-[484px] h-fit md:h-[424px] justify-evenly bg-white rounded-md shadow-lg p-4 md:p-6">
         <Button
           onClick={onClose}
           color="failure"
