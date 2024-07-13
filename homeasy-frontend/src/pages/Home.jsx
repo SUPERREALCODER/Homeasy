@@ -47,7 +47,7 @@ const Home = () => {
                 handleOptionClick(item);
               }}
               customClass="flex flex-col items-center justify-center gap-2 p-4 border cursor-pointer w-40 md:w-60 rounded-md shadow-sm duration-200 hover:shadow-md hover:bg-blue-100 active:shadow-lg"
-              customClassImg={"w-20"}
+              customClassImg={"w-20 h-20"}
               customClassTitle={"font-normal sm:font-medium"}
             />
           ))}
