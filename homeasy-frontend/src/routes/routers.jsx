@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Layout from "../Layout";
 // import Contact from "../pages/Contact";
 import Service from "../pages/Service";
+import Login from "../pages/Login";
 const Contact = React.lazy(() => import("../pages/Contact"));
 const routers = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const routers = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
