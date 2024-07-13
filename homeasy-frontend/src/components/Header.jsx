@@ -97,10 +97,11 @@ const Header = () => {
               <CiSearch className="w-6 h-6 text-gray-500" />
             </div>
             {/* login */}
-
-            <Button outline gradientDuoTone="purpleToBlue">
-              Login
-            </Button>
+            <Link to="/login">
+              <Button outline gradientDuoTone="purpleToBlue">
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
