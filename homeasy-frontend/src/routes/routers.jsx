@@ -31,6 +31,10 @@ const routers = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/logout",
+        element: <Login />,
+      },
     ],
   },
   {

@@ -1,6 +1,8 @@
 import { Button } from "flowbite-react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
+import axios from "axios";
 const navList = [
   {
     name: "Home",
@@ -13,6 +15,53 @@ const navList = [
 ];
 
 const Header = () => {
+  const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:3000/profile", {
+  //         method: "GET",
+  //         credentials: "include",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         setUser(userData);
+  //         console.log("user.email:-", user[0].email);
+  //       } else {
+  //         console.error("Failed to fetch user data");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await axios.get("http://localhost:3000/profile", {
+          withCredentials: true,
+        });
+        console.log(result.data);
+        if (result.data) {
+          setUser(result.data);
+        }
+
+        console.log("user:-", user[0].email);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <header className="w-full border-b">
@@ -96,12 +145,23 @@ const Header = () => {
             <div className="flex items-center cursor-pointer md:hidden">
               <CiSearch className="w-6 h-6 text-gray-500" />
             </div>
-            {/* login */}
-            <Link to="/login">
-              <Button outline gradientDuoTone="purpleToBlue">
-                Login
-              </Button>
-            </Link>
+            {/* Conditional rendering for user profile */}
+            {user ? (
+              <>
+                <div className="flex items-center">
+                  <span className="ml-2 text-xl">{user[0]?.email}</span>
+                </div>
+                <Link to="/logout">
+                  <button>LogOut</button>
+                </Link>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button outline gradientDuoTone="purpleToBlue">
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </header>
