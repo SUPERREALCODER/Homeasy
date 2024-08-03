@@ -9,7 +9,7 @@ import cors from "cors";
 
 const app = express();
 const port = 3000;
-var user = "";
+// var user = "";
 env.config();
 
 app.use(
@@ -43,25 +43,48 @@ db.connect();
 
 app.get(
   "/auth/google",
+  (req, res, next) => {
+    const role = req.query.role;
+    req.session.role = role; //store the role in the session
+    next();
+  },
   passport.authenticate("google", {
     scope: ["profile", "email"],
   })
 );
+
 app.get(
   "/auth/google/secrets",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173",
+    // successRedirect: "http://localhost:5173",
     failureRedirect: "/login",
-  })
+  }),
+  (req, res) => {
+    if (req.user.role === "service_provider") {
+      res.redirect("http://localhost:5173/service_provider");
+    } else {
+      res.redirect("http://localhost:5173");
+    }
+  }
 );
 
 app.get("/profile", async (req, res) => {
+  if (!req.isAuthenticated() || !req.user) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
   try {
     const result = await db.query("SELECT * FROM users  WHERE email = $1", [
-      user,
+      req.user.email,
     ]);
-    console.log(user);
-    res.json(result.rows);
+    console.log("from backend:- ", req.user.email);
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]); //return single user object
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+
+    // res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -84,23 +107,34 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/secrets",
+      passReqToCallback: true,
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
-    async (accessToken, refreshToken, profile, cb) => {
+    async (req, accessToken, refreshToken, profile, cb) => {
+      const userRole = req.session.role;
       // console.log(profile);
       try {
         const result = await db.query("SELECT *FROM users WHERE email = $1", [
           profile.email,
         ]);
-        user = profile.email;
-        console.log(user);
+        // user = profile.email;
+        // console.log(profile);
         if (result.rows.length === 0) {
           const newUser = await db.query(
-            "INSERT INTO users (email,password) VALUES ($1,$2)",
-            [profile.email, profile.id]
+            "INSERT INTO users (email, name, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
+            [profile.email, profile.given_name, profile.id, userRole]
           );
           cb(null, newUser.rows[0]);
         } else {
+          const user = result.rows[0];
+          if (user.role !== userRole || user.name !== profile.given_name) {
+            await db.query(
+              "UPDATE users SET role = $1, name = $2 WHERE email = $3",
+              [userRole, profile.given_name, profile.email]
+            );
+            user.role = userRole;
+            user.name = profile.given_name;
+          }
           cb(null, result.rows[0]);
         }
       } catch (err) {

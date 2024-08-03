@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Banner from "../components/Banner";
-import PopUp from "../components/PopUp";
-import OptionCard from "../components/OptionCard";
-import { serviceList } from "../data";
+import Banner from "../../components/Banner";
+import PopUp from "../../components/PopUp";
+import OptionCard from "../../components/OptionCard";
+import { serviceList } from "../../data";
 
 const Home = () => {
   const [showPopUp, setShowPopUp] = useState(false);

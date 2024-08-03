@@ -1,8 +1,8 @@
 import { Button } from "flowbite-react";
-import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import useFetchUser from "../hooks/useFetchUser";
 const navList = [
   {
     name: "Home",
@@ -15,52 +15,8 @@ const navList = [
 ];
 
 const Header = () => {
-  const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:3000/profile", {
-  //         method: "GET",
-  //         credentials: "include",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-
-  //       if (response.ok) {
-  //         const userData = await response.json();
-  //         setUser(userData);
-  //         console.log("user.email:-", user[0].email);
-  //       } else {
-  //         console.error("Failed to fetch user data");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await axios.get("http://localhost:3000/profile", {
-          withCredentials: true,
-        });
-        console.log(result.data);
-        if (result.data) {
-          setUser(result.data);
-        }
-
-        console.log("user:-", user[0].email);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    }
-    fetchData();
-  }, []);
+  const { logout } = useAuth();
+  const user = useFetchUser();
 
   return (
     <>
@@ -113,12 +69,6 @@ const Header = () => {
                     </svg>
                   </button>
                 </div>
-                {/* <button
-                type="submit"
-                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Search
-              </button> */}
               </div>
             </form>
           </div>
@@ -149,11 +99,16 @@ const Header = () => {
             {user ? (
               <>
                 <div className="flex items-center">
-                  <span className="ml-2 text-xl">{user[0]?.email}</span>
+                  <span className="ml-2 text-xl">{user?.name}</span>
                 </div>
-                <Link to="/logout">
-                  <button>LogOut</button>
-                </Link>
+                {/* <Link to="/logout"> */}
+                <button
+                  onClick={logout}
+                  className="dark:text-white border-2 border-gray-600 px-4 py-2 rounded-lg font-medium bg-gray-600 text-white active:scale-95 duration-150 flex items-center"
+                >
+                  LogOut
+                </button>
+                {/* </Link> */}
               </>
             ) : (
               <Link to="/login">

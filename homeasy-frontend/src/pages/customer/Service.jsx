@@ -1,10 +1,10 @@
 import React, { Suspense, useState, useEffect } from "react";
-import OptionCard from "../components/OptionCard";
+import OptionCard from "../../components/OptionCard";
 import { useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { serviceList } from "../data";
-const SubService = React.lazy(() => import("../components/SubService"));
+import { serviceList } from "../../data";
+const SubService = React.lazy(() => import("../../components/SubService"));
 
 const Service = () => {
   // const location = useLocation();
