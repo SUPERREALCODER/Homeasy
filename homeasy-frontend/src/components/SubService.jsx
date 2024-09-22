@@ -38,7 +38,7 @@ const SubService = ({ subService }) => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    formData.append("access_key", "<KEY>");
+    formData.append("access_key", import.meta.env.VITE_FORM_ACCESS_KEY);
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);

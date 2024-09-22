@@ -17,10 +17,10 @@ const Service = () => {
 
   useEffect(() => {
     const service = serviceList.find((item) => item.name === category);
-    const subService = service?.services.find(
+    const subService = service?.services.find( //filter to change
       (item) => item.name === subcategory
     );
-    setSelectedService(subService);
+    setSelectedService(prev => subService);
   }, [category, subcategory]);
 
   return (
@@ -35,7 +35,7 @@ const Service = () => {
                 Select a Service <div className="flex-auto border-t"></div>{" "}
               </h1>
               <div className=" p-2 grid grid-cols-2 place-items-center gap-4">
-                {serviceList
+                {serviceList && serviceList
                   .find((item) => item.name === category)
                   ?.services.map((service, index) => (
                     <OptionCard
