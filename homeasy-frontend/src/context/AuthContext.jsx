@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     console.log("LoginAsCustomer");
     setUserRole("customer");
     //Google Oauth login logic goes here
-    window.location.href = "http://localhost:3000/auth/google?role=customer";
+    window.location.href = "https://homeasy.onrender.com/auth/google?role=customer";
   };
 
   const LoginAsServiceProvider = () => {
@@ -28,14 +28,14 @@ export const AuthProvider = ({ children }) => {
     setUserRole("service_provider");
     //Implement Service Provider login logic here
     window.location.href =
-      "http://localhost:3000/auth/google?role=service_provider";
+      "https://homeasy.onrender.com/auth/google?role=service_provider";
   };
 
   const logout = () => {
     setUserRole(null);
     sessionStorage.removeItem("userRole");
     //Implement Logout Logic here
-    window.location.href = "http://localhost:3000/logout";
+    window.location.href = "https://homeasy.onrender.com/logout";
   };
 
   return (
