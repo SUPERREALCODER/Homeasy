@@ -26,7 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from this origin
+    origin: "https://homeasy-eight.vercel.app", // Allow requests from this origin
     credentials: true, // Enable credentials (cookies, authorization headers)
   })
 );
@@ -64,9 +64,9 @@ app.get(
   }),
   (req, res) => {
     if (req.user.role === "service_provider") {
-      res.redirect("http://localhost:5173/service_provider");
+      res.redirect("https://homeasy-eight.vercel.app/service_provider");
     } else {
-      res.redirect("http://localhost:5173");
+      res.redirect("https://homeasy-eight.vercel.app");
     }
   }
 );
@@ -97,7 +97,7 @@ app.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.redirect("http://localhost:5173");
+    res.redirect("https://homeasy-eight.vercel.app");
   });
 });
 
