@@ -7,7 +7,7 @@ const useFetchUser = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios.get("http://localhost:3000/profile", {
+        const result = await axios.get("https://homeasy.onrender.com/profile", {
           withCredentials: true,
         });
         // console.log(result.data);
