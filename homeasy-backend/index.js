@@ -9,7 +9,6 @@ import cors from "cors";
 
 const app = express();
 const port = 3000;
-// var user = "";
 env.config();
 
 app.use(
@@ -32,20 +31,25 @@ app.use(
   })
 );
 
+// Updated to use Neon DB credentials
 const db = new pg.Client({
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
   password: process.env.PG_PASSWORD,
   port: process.env.PG_PORT,
+  ssl: {
+    rejectUnauthorized: false, // Allow self-signed certificates (use cautiously in production)
+  },
 });
+
 db.connect();
 
 app.get(
   "/auth/google",
   (req, res, next) => {
     const role = req.query.role;
-    req.session.role = role; //store the role in the session
+    req.session.role = role; // Store the role in the session
     next();
   },
   passport.authenticate("google", {
@@ -56,7 +60,6 @@ app.get(
 app.get(
   "/auth/google/secrets",
   passport.authenticate("google", {
-    // successRedirect: "http://localhost:5173",
     failureRedirect: "/login",
   }),
   (req, res) => {
@@ -74,17 +77,15 @@ app.get("/profile", async (req, res) => {
   }
 
   try {
-    const result = await db.query("SELECT * FROM users  WHERE email = $1", [
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [
       req.user.email,
     ]);
     console.log("from backend:- ", req.user.email);
     if (result.rows.length > 0) {
-      res.json(result.rows[0]); //return single user object
+      res.json(result.rows[0]); // Return single user object
     } else {
       res.status(404).json({ error: "User not found" });
     }
-
-    // res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -112,13 +113,12 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, cb) => {
       const userRole = req.session.role;
-      // console.log(profile);
+
       try {
-        const result = await db.query("SELECT *FROM users WHERE email = $1", [
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [
           profile.email,
         ]);
-        // user = profile.email;
-        // console.log(profile);
+
         if (result.rows.length === 0) {
           const newUser = await db.query(
             "INSERT INTO users (email, name, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
