@@ -12,7 +12,7 @@ const SubService = ({ subService }) => {
 
   const handleBook = async () => {
     try {
-      const result = await axios.get("http://localhost:3000/profile", {
+      const result = await axios.get("https://homeasy.onrender.com/profile", {
         withCredentials: true,
       });
       setUser(result.data);
